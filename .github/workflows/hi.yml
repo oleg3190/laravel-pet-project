@@ -38,14 +38,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '16.x'
-    - name: Install NPM packages
-      run: npm ci
-    - name: Build frontend
-      run: npm run development
     - name: Install PHP versions
       uses: shivammathur/setup-php@v2
       with:
