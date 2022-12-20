@@ -1,0 +1,41 @@
+{
+    "name": "laracraft-tech/laravel-xhprof",
+    "description": "Easy XHProf setup to profile your laravel application!",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Zacharias Creutznacher",
+            "email": "zacharias@laracraft.tech",
+            "homepage": "https://laracraft.tech"
+        }
+    ],
+    "homepage": "https://github.com/laracraft-tech/laravel-xhprof",
+    "keywords": ["laravel", "xhprof", "profiling", "profiler", "profile", "php"],
+    "require": {
+        "php": ">=7.1",
+        "laravel/framework": "^5.3|^6.0|^7.0|^8.0|^9.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "~7"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaracraftTech\\LaravelXhprof\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaracraftTech\\LaravelXhprof\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaracraftTech\\LaravelXhprof\\XHProfServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

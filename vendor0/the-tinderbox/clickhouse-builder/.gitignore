@@ -1,0 +1,5 @@
+/vendor
+/.idea
+tests/coverage
+composer.lock
+.phpunit.result.cache
