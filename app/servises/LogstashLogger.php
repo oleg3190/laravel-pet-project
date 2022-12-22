@@ -7,8 +7,8 @@ use Monolog\Handler\SocketHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
-class LogstashLogger {
-
+class LogstashLogger
+{
     /**
      * @param array $config
      * @return LoggerInterface
@@ -20,5 +20,4 @@ class LogstashLogger {
 
         return new Logger('logstash.main', [$handler]);
     }
-
 }

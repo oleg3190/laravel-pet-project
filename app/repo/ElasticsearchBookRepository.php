@@ -18,13 +18,12 @@ class ElasticsearchBookRepository implements SearchBookRepository
     public function __construct(Client $elasticsearch)
     {
         $this->elasticsearch = $elasticsearch;
-        $this->model = new Book;
+        $this->model = new Book();
     }
 
-    public function search(string $query = ''): Collection
+    public function search(string|null $query = ''): Collection
     {
         $items = $this->execElastic($query);
-
 
         return $this->getItems($items);
     }
@@ -32,21 +31,24 @@ class ElasticsearchBookRepository implements SearchBookRepository
     public function setIndexForAllItems()
     {
         foreach ($this->model::cursor() as $item) {
-            $this->elasticsearch->index([
+            $this->elasticsearch->index(
+                [
                 'index' => $item->getTable(),
                 'type' => $item->getTable(),
                 'id' => $item->getKey(),
                 'body' => $item->toArray(),
-            ]);
+                ]
+            );
         }
     }
 
-    private function execElastic(string $query = '')
+    private function execElastic(string|null $query = '')
     {
         $index = $this->model->getTable();
-        $items = $this->elasticsearch->search([
+        $items = $this->elasticsearch->search(
+            [
             //'scroll' => '30s', // how long between scroll requests. should be small!
-            //'size'   => 50, 
+                //'size'   => 50,
             'index' => $index,
             'type' => $index,
             'body' => [
@@ -66,7 +68,8 @@ class ElasticsearchBookRepository implements SearchBookRepository
                 ]
             ],
 
-        ]);
+            ]
+        );
 
         return $items;
     }

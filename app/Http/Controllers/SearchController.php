@@ -8,10 +8,8 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function __construct(BooksRepository $repo, SearchBookRepository $service)
+    public function __construct(private BooksRepository $repo, private SearchBookRepository $service)
     {
-        $this->repo = $repo;
-        $this->service = $service;
     }
 
     /**
@@ -56,16 +54,6 @@ class SearchController extends Controller
         $this->repo->store($request);
 
         return redirect()->back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
     }
 
     /**

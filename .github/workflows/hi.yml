@@ -74,24 +74,24 @@ jobs:
       run: php --version
 
 # Code quality
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
+#    - name: Execute tests (Unit and Feature tests) via PHPUnit
 # Set environment
-      env:
-        DB_CONNECTION: mysql
-        DB_DATABASE: db_test_laravel
-        DB_PORT: 33306
-        DB_USER: root
+#      env:
+#        DB_CONNECTION: mysql
+#        DB_DATABASE: db_test_laravel
+#        DB_PORT: 33306
+#        DB_USER: root
 
-      run: vendor/bin/phpunit --testdox
+      #run: vendor/bin/phpunit --testdox
 
 
 
-    - name: Execute Code Sniffer via phpcs
-      run: |
-        vendor/bin/phpcs --standard=PSR12 app
+    #- name: Execute Code Sniffer via phpcs
+    #  run: |
+    #    vendor/bin/phpcs --standard=PSR12 app
 
-    - name: Execute Code Static Analysis (PHP Stan + Larastan)
-      run: |
-        vendor/bin/phpstan analyse -c ./phpstan.neon --no-progress
+    #- name: Execute Code Static Analysis (PHP Stan + Larastan)
+    #  run: |
+    #    vendor/bin/phpstan analyse -c ./phpstan.neon --no-progress
 
 

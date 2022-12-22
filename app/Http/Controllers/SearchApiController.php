@@ -8,10 +8,8 @@ use Illuminate\Http\Request;
 
 class SearchApiController extends Controller
 {
-    public function __construct(BooksRepository $repo, SearchBookRepository $service)
+    public function __construct(private BooksRepository $repo, private SearchBookRepository $service)
     {
-        $this->repo = $repo;
-        $this->service = $service;
     }
 
     /**
@@ -63,16 +61,6 @@ class SearchApiController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -90,15 +78,13 @@ class SearchApiController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
-        try {
-            $this->repo->update($id, $request);
-        } catch (\DomainException $e) {
-            return response()->json($e->getMessage(), 500);
-        }
+        $data = $this->repo->update($id, $request);
+
+        return response()->json($data, 500);
     }
 
     /**

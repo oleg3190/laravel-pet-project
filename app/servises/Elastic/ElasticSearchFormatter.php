@@ -3,7 +3,7 @@
 namespace App\servises\Elastic;
 
 use Monolog\Formatter\NormalizerFormatter;
-use Monolog\Formatter\ElasticsearchFormatter as BaseFormatter; 
+use Monolog\Formatter\ElasticsearchFormatter as BaseFormatter;
 
 class ElasticSearchFormatter extends BaseFormatter
 {

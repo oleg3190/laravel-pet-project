@@ -13,13 +13,16 @@ class ElasticsearchLogRepository
 {
     private $elasticsearch;
 
+    private $model;
+
 
     public function __construct(Client $elasticsearch)
     {
         $this->elasticsearch = $elasticsearch;
+        $this->model = new Book();
     }
 
-    public function search(string $query = ''): Collection
+    public function search(string|null $query = ''): Collection
     {
         $items = $this->execElastic($query);
 
@@ -39,15 +42,15 @@ class ElasticsearchLogRepository
 
                 'query' => [
                     /* 'multi_match' => [
-                        'fields' => ['title', 'author'],
-                        'query' => $query,
-                        "type" => "phrase_prefix",
+                    'fields' => ['title', 'author'],
+                    'query' => $query,
+                    "type" => "phrase_prefix",
                     ],*/
                     'multi_match' => [
                         'fields' => ['title', 'author'],
                         'query' => $query,
                         "type" => "phrase_prefix",
-                        "operator" =>   "and"
+                        "operator" => "and"
                     ],
                 ]
             ],

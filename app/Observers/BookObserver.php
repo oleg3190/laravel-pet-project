@@ -25,18 +25,18 @@ class BookObserver
         $this->pushToKafka($book);
     }
 
-    public function updated(book $book)
+    public function updated(Book $book)
     {
         $this->pushToKafka($book);
     }
 
 
-    public function deleted(book $book)
+    public function deleted(Book $book)
     {
         $this->pushToKafka($book);
     }
 
-    protected function pushToKafka(book $book)
+    protected function pushToKafka(Book $book)
     {
         try {
             $this->producerHandler->setTopic(self::KAFKA_TOPIC)

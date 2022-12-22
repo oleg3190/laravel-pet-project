@@ -14,7 +14,8 @@ class LogController extends Controller
         $this->elasticsearch = $elasticsearch;
     }
 
-    public function log(){
+    public function log()
+    {
         Log::channel('logstash')->debug('Logging to logstash');
     }
 
@@ -25,24 +26,24 @@ class LogController extends Controller
             'type' => 'logs',
             'id' => 34,
             'body' => [
-                'properties'=> [
-                    "appVersion" =>  [
+                'properties' => [
+                    "appVersion" => [
                         "type" => "keyword",
                     ],
-                    "clientApplication" =>  [
+                    "clientApplication" => [
                         "type" => "keyword",
                     ],
-                    "uid" =>  [
+                    "uid" => [
                         "type" => "keyword",
                     ],
-                    "ip" =>  [
+                    "ip" => [
                         "type" => "ip",
                     ],
                     "usage_date" => [
                         "type" => "date",
-                        "format"  => "yyyy-MM-dd HH:mm:ss"
+                        "format" => "yyyy-MM-dd HH:mm:ss"
                     ],
-                    "os" =>  [
+                    "os" => [
                         "type" => "keyword",
                     ]
                 ]
