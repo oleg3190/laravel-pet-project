@@ -27,7 +27,7 @@ services:
   fpm:
     build:
       context: ../
-      dockerfile: ./d/fpm/Dockerfile
+      dockerfile: ./docker/fpm/Dockerfile
     ports:
       - "${FPM_PORT}:8000"
     #command: php -f /usr/bin/composer.phar install
