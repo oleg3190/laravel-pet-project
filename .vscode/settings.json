@@ -1,0 +1,9 @@
+{
+	"phpsab.executablePathCS": "/usr/bin/phpcs",
+	"phpsab.executablePathCBF": "/usr/bin/phpcbf",
+	"phpsab.snifferMode": "onType",
+	"phpsab.standard": "",
+	"phpsab.snifferArguments": [
+	
+	]
+}
