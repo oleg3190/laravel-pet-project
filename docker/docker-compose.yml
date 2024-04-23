@@ -1,0 +1,50 @@
+version: "3.7"
+
+services:
+  mysql:
+    build:
+      context: ./mysql
+      args:
+        - MYSQL_VERSION=${MYSQL_VERSION}
+        - CONF_PATH=${CONF_PATH}
+    cap_add:
+      - all
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=${WORKSPACE_TIMEZONE}
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/master/my.cnf:/etc/mysql/my.cnf
+    #- ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+    ports:
+      - "${MYSQL_PORT}:3306"
+    networks:
+      - elk
+
+  fpm:
+    build:
+      context: ../
+      dockerfile: ./d/fpm/Dockerfile
+    ports:
+      - "${FPM_PORT}:8000"
+    #command: php -f /usr/bin/composer.phar install
+    networks:
+      - elk
+    volumes:
+      - ../data/api:/var/www
+      - ./fpm/php.ini:/usr/local/etc/php/conf.d/php.ini
+      #- ./fpm/xhprof.ini:/usr/local/etc/php/conf.d/xhprof.ini
+
+
+networks:
+  elk:
+    driver: bridge
+  frontend:
+    driver: bridge
+
+volumes:
+  mysql:
+    driver: local

@@ -1,0 +1,1 @@
+NGINXACCESS %{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\]
