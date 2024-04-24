@@ -9,8 +9,9 @@ RUN apk --update add \
 	build-base \
 	composer \
 	nodejs \
-	npm \
-	libmcrypt-dev \
+	npm
+	
+RUN libmcrypt-dev \
 	libxml2-dev \
 	pcre-dev \
 	zlib-dev \
