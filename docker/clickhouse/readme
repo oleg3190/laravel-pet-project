@@ -1,0 +1,120 @@
+1. Create a directory for our project:
+mkdir /opt/clickhouse
+
+2. Change directory and create a docker-compose.yml file:
+cd /opt/clickhouse
+
+vi docker-compose.yml
+version: '3.7'
+
+networks:
+  default:
+    name: ch-net
+    external: true
+
+services:
+  
+  clickhouse-server:
+    image: yandex/clickhouse-server
+    container_name: clickhouse-server
+    ports:
+      - '8123:8123'
+      - '9000:9000'
+    volumes:
+      - ./db:/var/lib/clickhouse
+    ulimits:
+      nofile: 262144 
+
+3. Create a persistent network for the ClickHouse server container:
+docker create network ch-net
+
+4. Pull the image and run it:
+docker compose up -d
+
+5. Check the status:
+docker ps
+
+6. Connect to the ClickHouse server via the native client:
+docker compose exec clickhouse-server clickhouse-client
+
+Next, we need to:
+
+1) Turn on SQL based access control;
+2) Create a superuser account;
+3) Restrict the default user.
+
+For this, first, we need to get the configuration file users.xml from the running container and save it on the host permanently.
+
+7. Get the configuration file users.xml from the running container:
+docker inspect clickhouse-server | grep -i merged
+cp /var/lib/docker/overlay2/put_your_path/merged/etc/clickhouse-server/users.xml /opt/clickhouse/
+
+replace put_your_path with your correctly path
+8. Edit users.xml by uncommenting the option access_management:
+vi /opt/clickhouse/users.xml
+<clickhouse>
+    ...
+    <users>
+        ...
+        <default>
+            ...
+            <access_management>1</access_management>
+        </default>
+    </users>
+    ...
+</clickhouse>
+
+9. Include the config in docker-compose.yml:
+vi docker-compose.yml
+version: '3.7'
+
+networks:
+  default:
+    name: ch-net
+    external: true
+
+services:
+
+  clickhouse-server:
+    image: yandex/clickhouse-server
+    container_name: clickhouse-server
+    ports:
+      - '8123:8123'
+      - '9000:9000'
+    volumes:
+      - ./clickhouse/users.xml:/etc/clickhouse-server/users.xml
+      - ./clickhouse/db:/var/lib/clickhouse
+    ulimits:
+      nofile: 262144
+
+9. Restart the container:
+docker compose down
+docker compose up -d
+
+10. Connect to the ClickHouse server via the native client:
+docker compose exec clickhouse-server clickhouse-client
+
+11. Create a local account for the superuser:
+:) CREATE USER root HOST LOCAL IDENTIFIED WITH sha256_password BY 'password';
+
+12. Grant all privileges to the superuser:
+:) GRANT ALL ON *.* TO root WITH GRANT OPTION;
+
+13. Quit the cli:
+:) quit
+
+10. Restrict read-only access for the default user:
+vi /opt/clickhouse/users.xml
+<clickhouse>
+    ...
+    <users>
+        ...
+        <default>
+            ...
+            <profile>readonly</profile>
+            ...
+            <access_management>0</access_management>
+        </default>
+    </users>
+    ...
+</clickhouse>

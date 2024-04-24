@@ -8,8 +8,8 @@ RUN apk --update add \
 	curl \
 	build-base \
 	composer \
-	#nodejs \
-	#npm \
+	nodejs \
+	npm \
 	libmcrypt-dev \
 	libxml2-dev \
 	pcre-dev \

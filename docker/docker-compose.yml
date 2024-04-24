@@ -38,6 +38,18 @@ services:
       - ./fpm/php.ini:/usr/local/etc/php/conf.d/php.ini
       #- ./fpm/xhprof.ini:/usr/local/etc/php/conf.d/xhprof.ini
 
+  clickhouse-server:
+    image: yandex/clickhouse-server
+    container_name: clickhouse-server
+    ports:
+      - '8123:8123'
+      - '9000:9000'
+    volumes:
+      - ./users.xml:/etc/clickhouse-server/users.xml
+      - ./db:/var/lib/clickhouse
+    ulimits:
+      nofile: 262144
+
 
 networks:
   elk:
