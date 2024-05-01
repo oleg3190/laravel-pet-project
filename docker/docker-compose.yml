@@ -21,8 +21,6 @@ services:
     #- ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
     ports:
       - "${MYSQL_PORT}:3306"
-    networks:
-      - elk
 
   fpm:
     build:
@@ -31,8 +29,6 @@ services:
     ports:
       - "${FPM_PORT}:8000"
     #command: php -f /usr/bin/composer.phar install
-    networks:
-      - elk
     volumes:
       - ../data/api:/var/www
       - ./fpm/php.ini:/usr/local/etc/php/conf.d/php.ini
