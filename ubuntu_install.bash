@@ -34,6 +34,8 @@ sudo groupadd docker
 sudo gpasswd -a $USER docker
 newgrp docker
 
+sudo apt install mysql-server mysql-client
+
 # UPdate ports
 sudo nano /etc/apache2/ports.conf
 #sudo systemctl restart apache2

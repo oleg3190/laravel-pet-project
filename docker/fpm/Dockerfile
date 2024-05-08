@@ -9,9 +9,8 @@ RUN apk --update add \
 	build-base \
 	composer \
 	nodejs \
-	npm
-	
-RUN libmcrypt-dev \
+	npm \
+	libmcrypt-dev \
 	libxml2-dev \
 	pcre-dev \
 	zlib-dev \
@@ -94,12 +93,10 @@ WORKDIR /var/www
 
 RUN chmod -R ug+rwx storage bootstrap/cache
 
-
-
-RUN php -f /usr/bin/composer.phar install
+RUN php -f /usr/bin/composer.phar install --prefer-source --no-interaction
 # Change current user to www
 #USER www
 
-ENTRYPOINT ["php", "-d", "variables_order=EGPCS", "artisan", "serve","--host=0.0.0.0", "--port=8000"]
+ENTRYPOINT ["php", "-d", "variables_order=EGPCS", "artisan", "serve","--host=0.0.0.0", "--port=8002"]
 #ENTRYPOINT ["php", "-d", "variables_order=EGPCS", "artisan", "octane:start","--watch","--server=swoole", "--host=0.0.0.0", "--port=8000"]
-EXPOSE 8000
+EXPOSE 8002

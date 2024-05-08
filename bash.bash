@@ -21,6 +21,12 @@ sudo chmod +x /usr/local/bin/docker-compose
 # Install Make
 sudo apt-get install -y make
 
+# Install mysql
+sudo apt install mysql-server mysql-client
+#mysqladmin password -u root -p
+mysql_secure_installation
+mysql -u root -p
+
 # Create directory for web server
 sudo mkdir /var/www
 
