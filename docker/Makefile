@@ -1,7 +1,7 @@
 up: docker-up-d
 down: docker-down
 docker-up-d: 
-		sudo docker-compose up -d
+		sudo docker-compose up
   
 log: 
 		docker-compose up logstash
