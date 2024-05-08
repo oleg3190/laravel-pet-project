@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  fpm:
+    image: oleg3190/fpm:latest
+    ports:
+      - "8000:8000"
+    command: php -f /usr/bin/composer.phar install
+    volumes:
+      - myapp:/var/www
+
+
+networks:
+  frontend:
+    driver: bridge
+
+volumes:
+  myapp:
+    driver: local
+  mysql:
+    driver: local
